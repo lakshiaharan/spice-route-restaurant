@@ -1,0 +1,12 @@
+{
+  "name": "restaurant-aws-deployment",
+  "version": "1.0.0",
+  "description": "AWS deployment scripts and tools for Restaurant Management System",
+  "main": "sdk-upload.js",
+  "scripts": {
+    "upload:sdk": "node sdk-upload.js"
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.758.0"
+  }
+}

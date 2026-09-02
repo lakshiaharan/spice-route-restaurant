@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Spice Route — Smart Cloud Kitchen & Dining Platform</title>
+  
+  <!-- Modern Google Fonts: Outfit & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Top Cloud Application Mode Switcher Bar -->
+  <div class="cloud-app-bar">
+    <div class="cloud-brand">
+      <span class="cloud-pulse"></span>
+      <i class="fa-solid fa-cloud-bolt"></i>
+      <span>AWS CloudOps Suite</span>
+    </div>
+    <div class="app-mode-tabs">
+      <button class="mode-btn active" data-view="customer-view" onclick="switchAppView('customer-view')">
+        <i class="fa-solid fa-utensils"></i> Customer Dining
+      </button>
+      <button class="mode-btn" data-view="ai-sommelier-view" onclick="switchAppView('ai-sommelier-view')">
+        <i class="fa-solid fa-robot"></i> AI Dietary Sommelier
+      </button>
+      <button class="mode-btn" data-view="kitchen-kds-view" onclick="switchAppView('kitchen-kds-view')">
+        <i class="fa-solid fa-kitchen-set"></i> Kitchen KDS <span class="badge-count" id="kdsActiveCount">0</span>
+      </button>
+      <button class="mode-btn" data-view="cloudops-view" onclick="switchAppView('cloudops-view')">
+        <i class="fa-solid fa-chart-line"></i> Cloud Observability
+      </button>
+    </div>
+    <div class="cloud-quick-actions">
+      <button class="btn-track-quick" onclick="openTrackModal()">
+        <i class="fa-solid fa-location-crosshairs"></i> Track Order
+      </button>
+    </div>
+  </div>
+
+  <!-- Navigation (for Customer View) -->
+  <header class="navbar" id="mainNavbar">
+    <div class="logo">
+      <i class="fa-solid fa-leaf logo-icon"></i>
+      <span>Spice Route</span>
+      <span class="pure-veg-tag"><i class="fa-solid fa-seedling"></i> 100% Pure Veg</span>
+    </div>
+    <div class="menu-toggle" id="mobile-menu"><i class="fa-solid fa-bars"></i></div>
+    <nav id="nav-links">
+      <a href="#home" onclick="handleNavClick(event, 'home')" class="active">Home</a>
+      <a href="#menu" onclick="handleNavClick(event, 'menu')">Our Menu</a>
+      <a href="#ai-sommelier" onclick="handleNavClick(event, 'ai-sommelier')">AI Sommelier</a>
+      <a href="#booking" onclick="handleNavClick(event, 'booking')">Book a Table</a>
+      <a href="#order" onclick="handleNavClick(event, 'order')">Order Online</a>
+      <a href="#contact" onclick="handleNavClick(event, 'contact')">Contact</a>
+    </nav>
+  </header>
+
+  <!-- =========================================================================
+       VIEW 1: CUSTOMER DINING & ORDERING EXPERIENCE
+       ========================================================================= -->
+  <div id="customer-view" class="app-view active-view">
+    
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <div class="hero-badge"><i class="fa-solid fa-award"></i> Powered by AWS Serverless & CloudOps</div>
+        <h1>Savor Authentic Indian Flavors</h1>
+        <p>100% Pure Vegetarian cuisine crafted with freshly ground spices, slow-cooked royal gravies, and real-time cloud ordering intelligence.</p>
+        <div class="hero-buttons">
+          <a href="#menu" onclick="handleNavClick(event, 'menu')" class="btn btn-primary"><i class="fa-solid fa-book-open"></i> Explore Menu</a>
+          <a href="#order" onclick="handleNavClick(event, 'order')" class="btn btn-secondary"><i class="fa-solid fa-bag-shopping"></i> Order Online</a>
+          <button class="btn btn-ai" onclick="switchAppView('ai-sommelier-view')"><i class="fa-solid fa-wand-magic-sparkles"></i> Consult AI Sommelier</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- AI Dietary Feature Banner -->
+    <section class="ai-banner-strip" id="ai-assistant-anchor">
+      <div class="container">
+        <div class="ai-strip-card">
+          <div class="ai-strip-left">
+            <div class="ai-badge-glowing"><i class="fa-solid fa-brain"></i> AI Dietary & Allergen Safety Engine</div>
+            <h3>Have Dietary Restrictions, Allergies, or Calorie Goals?</h3>
+            <p>Our Cloud AI Assistant matches your health preferences with safe menu options in real time.</p>
+          </div>
+          <div class="ai-strip-right">
+            <button class="btn btn-ai-large" onclick="switchAppView('ai-sommelier-view')">
+              <i class="fa-solid fa-sparkles"></i> Launch AI Sommelier
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Menu Section -->
+    <section id="menu" class="menu section-padding">
+      <div class="container">
+        <div class="section-header">
+          <span class="badge"><i class="fa-solid fa-utensils"></i> Chef's Selection</span>
+          <h2>21 Signature Pure Veg Delicacies</h2>
+          <p class="section-subtext">Every dish prepared fresh with pure desi ghee, premium cottage cheese, and authentic regional Indian spices.</p>
+        </div>
+
+        <!-- Menu Filter Controls (Search + Category Tabs) -->
+        <div class="menu-filter-controls">
+          <div class="menu-search-wrapper">
+            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+            <input type="text" id="menuSearchInput" class="menu-search-input" placeholder="Search across 21 signature dishes (e.g. Paneer, Biryani, Chaat, Lassi, Naan)..." oninput="handleMenuSearch(this.value)" />
+          </div>
+
+          <div class="menu-category-tabs">
+            <button type="button" class="menu-tab-btn active" onclick="filterMenuByCategory('All', this)">
+              <i class="fa-solid fa-border-all"></i> All (21)
+            </button>
+            <button type="button" class="menu-tab-btn" onclick="filterMenuByCategory('Beverages', this)">
+              <i class="fa-solid fa-glass-water"></i> Beverages (5)
+            </button>
+            <button type="button" class="menu-tab-btn" onclick="filterMenuByCategory('Starters', this)">
+              <i class="fa-solid fa-bowl-food"></i> Starters & Chaat (4)
+            </button>
+            <button type="button" class="menu-tab-btn" onclick="filterMenuByCategory('Main Course', this)">
+              <i class="fa-solid fa-pot-food"></i> Main Course (6)
+            </button>
+            <button type="button" class="menu-tab-btn" onclick="filterMenuByCategory('Breads & Rice', this)">
+              <i class="fa-solid fa-bread-slice"></i> Breads & Rice (2)
+            </button>
+            <button type="button" class="menu-tab-btn" onclick="filterMenuByCategory('Desserts', this)">
+              <i class="fa-solid fa-ice-cream"></i> Desserts (4)
+            </button>
+          </div>
+
+          <div class="menu-status-bar">
+            <span class="badge" id="menuItemCountBadge" style="background:#f1ede5; color:#555; text-transform:none; font-weight:700;">
+              Showing all 21 Pure-Veg Delicacies
+            </span>
+            <span style="font-size:0.85rem; color:#666;">
+              <i class="fa-solid fa-circle-check" style="color:#2e7d32;"></i> Click <strong>"+ Add"</strong> on any item to order instantly
+            </span>
+          </div>
+        </div>
+
+        <!-- Dynamic Menu Grid Container -->
+        <div class="menu-grid" id="dynamicMenuGrid">
+          <!-- Populated dynamically with 21 curated dishes by script.js -->
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Table Reservation Section -->
+    <section id="booking" class="forms-section section-padding">
+      <div class="container single-layout">
+        <div class="form-card glass-panel">
+          <div class="form-header">
+            <div class="form-icon-circle"><i class="fa-regular fa-calendar-check"></i></div>
+            <h2>Reserve a Table</h2>
+            <p>Book your dining experience in advance. Instant confirmation via AWS DynamoDB.</p>
+          </div>
+          <form id="bookingForm" class="modern-form">
+            <div class="input-group">
+              <label for="bookName"><i class="fa-regular fa-user"></i> Full Name</label>
+              <input type="text" id="bookName" placeholder="e.g. Ramesh Kumar" required />
+            </div>
+            <div class="input-row">
+              <div class="input-group half">
+                <label for="bookEmail"><i class="fa-regular fa-envelope"></i> Email Address</label>
+                <input type="email" id="bookEmail" placeholder="ramesh@example.com" required />
+              </div>
+              <div class="input-group half">
+                <label for="bookPhone"><i class="fa-solid fa-phone"></i> Phone Number</label>
+                <input type="tel" id="bookPhone" placeholder="+91 98765 43210" required />
+              </div>
+            </div>
+            <div class="input-row">
+              <div class="input-group third">
+                <label for="bookDate"><i class="fa-regular fa-calendar"></i> Date</label>
+                <input type="date" id="bookDate" required />
+              </div>
+              <div class="input-group third">
+                <label for="bookTime"><i class="fa-regular fa-clock"></i> Time</label>
+                <input type="time" id="bookTime" required />
+              </div>
+              <div class="input-group third">
+                <label for="bookGuests"><i class="fa-solid fa-users"></i> Guests</label>
+                <input type="number" id="bookGuests" placeholder="2" min="1" max="20" required />
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary submit-btn">
+              <span>Confirm Reservation</span>
+              <div class="spinner hidden"></div>
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- Online Ordering Section -->
+    <section id="order" class="forms-section section-padding order-section-bg">
+      <div class="container single-layout">
+        <div class="form-card glass-panel">
+          <div class="form-header">
+            <div class="form-icon-circle delivery-icon"><i class="fa-solid fa-motorcycle"></i></div>
+            <h2>Order Online Delivery</h2>
+            <p>Real-time order dispatch with live cloud tracking.</p>
+          </div>
+          <form id="orderForm" class="modern-form">
+            <div class="input-row">
+              <div class="input-group half">
+                <label for="orderName"><i class="fa-regular fa-user"></i> Full Name</label>
+                <input type="text" id="orderName" placeholder="e.g. Priya Sharma" required />
+              </div>
+              <div class="input-group half">
+                <label for="orderPhone"><i class="fa-solid fa-phone"></i> Phone Number</label>
+                <input type="tel" id="orderPhone" placeholder="+91 98765 43210" required />
+              </div>
+            </div>
+            <div class="input-group">
+              <label for="orderItems"><i class="fa-solid fa-utensils"></i> Selected Dish</label>
+              <select id="orderItems" required>
+                <option value="" disabled selected>Click "Add" on any menu card, or select here...</option>
+                <optgroup label="Refreshing Beverages">
+                  <option value="Mango Lassi (₹90)">Mango Lassi (₹90)</option>
+                  <option value="Masala Chai (₹50)">Masala Chai (₹50)</option>
+                  <option value="Fresh Lime Soda (₹60)">Fresh Lime Soda (₹60)</option>
+                  <option value="Jaljeera (₹50)">Jaljeera (₹50)</option>
+                </optgroup>
+                <optgroup label="Appetizing Starters">
+                  <option value="Paneer Tikka (₹220)">Paneer Tikka (₹220)</option>
+                  <option value="Punjabi Samosa (₹80)">Punjabi Samosa (₹80)</option>
+                  <option value="Gobi Manchurian (₹180)">Gobi Manchurian (₹180)</option>
+                </optgroup>
+                <optgroup label="Hearty Main Course">
+                  <option value="Vegetable Biryani (₹250)">Vegetable Biryani (₹250)</option>
+                  <option value="Palak Paneer (₹280)">Palak Paneer (₹280)</option>
+                  <option value="Dal Makhani (₹260)">Dal Makhani (₹260)</option>
+                  <option value="Malai Kofta (₹290)">Malai Kofta (₹290)</option>
+                  <option value="Butter Naan (₹50)">Butter Naan (₹50)</option>
+                </optgroup>
+                <optgroup label="Sweet Desserts">
+                  <option value="Gulab Jamun (₹120)">Gulab Jamun (₹120)</option>
+                  <option value="Rasmalai (₹150)">Rasmalai (₹150)</option>
+                  <option value="Gajar Ka Halwa (₹140)">Gajar Ka Halwa (₹140)</option>
+                </optgroup>
+              </select>
+            </div>
+            <div class="input-group">
+              <label for="orderAddress"><i class="fa-solid fa-location-dot"></i> Delivery Address</label>
+              <input type="text" id="orderAddress" placeholder="Flat 402, Green Valley Apts, MG Road" required />
+            </div>
+            <button type="submit" class="btn btn-primary submit-btn">
+              <span>Place Order & Track Live</span>
+              <div class="spinner hidden"></div>
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact" class="modern-footer">
+      <div class="container footer-content">
+        <div class="brand-info">
+          <div class="logo">
+            <i class="fa-solid fa-leaf logo-icon"></i>
+            <span>Spice Route</span>
+          </div>
+          <p>100% Pure Vegetarian Indian Cuisine crafted with authentic heritage recipes and premium ingredients.</p>
+          <div class="veg-certified">
+            <i class="fa-solid fa-shield-halved"></i> FSSAI Certified Pure Veg Kitchen
+          </div>
+        </div>
+        <div class="contact-details">
+          <h4>Visit & Contact</h4>
+          <p><i class="fa-solid fa-location-dot"></i> 123 MG Road, Bengaluru, Karnataka</p>
+          <p><i class="fa-solid fa-phone"></i> +91 98765 43210</p>
+          <p><i class="fa-solid fa-envelope"></i> contact@spiceroute.com</p>
+          <p><i class="fa-regular fa-clock"></i> 11:00 AM – 11:00 PM (Everyday)</p>
+        </div>
+        <div class="social-links">
+          <h4>Connect With Us</h4>
+          <div class="icons">
+            <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="#" aria-label="Twitter"><i class="fa-brands fa-x-twitter"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Spice Route Pure Veg Restaurant. Hosted on AWS Free Tier (S3, EC2 & DynamoDB).</p>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- =========================================================================
+       VIEW 2: AI DIETARY & NUTRITION SOMMELIER
+       ========================================================================= -->
+  <div id="ai-sommelier-view" class="app-view">
+    <div class="ai-container section-padding">
+      <div class="ai-header">
+        <span class="badge"><i class="fa-solid fa-brain"></i> Cloud Intelligence Engine</span>
+        <h2>AI Dietary & Nutrition Sommelier</h2>
+        <p>Personalized meal safety analysis, allergen filtering, and intelligent nutritional matching.</p>
+      </div>
+
+      <div class="ai-interactive-card glass-panel">
+        <div class="ai-filters-title"><i class="fa-solid fa-sliders"></i> Select Dietary Profiles & Allergens:</div>
+        <div class="diet-chips" id="dietChipsContainer">
+          <button type="button" class="chip-btn" data-val="vegan"><i class="fa-solid fa-seedling"></i> 100% Vegan</button>
+          <button type="button" class="chip-btn" data-val="gluten-free"><i class="fa-solid fa-wheat-awn-circle-exclamation"></i> Gluten-Free</button>
+          <button type="button" class="chip-btn" data-val="nut-free"><i class="fa-solid fa-ban"></i> Nut-Free</button>
+          <button type="button" class="chip-btn" data-val="high-protein"><i class="fa-solid fa-dumbbell"></i> High Protein (>14g)</button>
+          <button type="button" class="chip-btn" data-val="diabetic-friendly"><i class="fa-solid fa-heart-pulse"></i> Diabetic Friendly</button>
+          <button type="button" class="chip-btn" data-val="jain"><i class="fa-solid fa-spa"></i> Jain Friendly</button>
+        </div>
+
+        <!-- Advanced Filter Controls (Calorie Slider + Category Dropdown) -->
+        <div class="ai-advanced-controls" style="display:grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 20px 0; padding: 16px; background:#f9f6f0; border-radius: 10px; border: 1px solid #e8e2d8;">
+          <div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 8px;">
+              <label for="aiCalorieSlider" style="font-weight:700; font-size:0.88rem; color:#242220;">
+                <i class="fa-solid fa-fire-flame-curved" style="color:#ea580c;"></i> Max Calorie Budget:
+              </label>
+              <span id="aiCalorieValue" style="font-weight:800; color:#7a1f1f; background:#fff; padding: 2px 10px; border-radius: 12px; border: 1px solid #e2dac9; font-size:0.85rem;">500 kcal</span>
+            </div>
+            <input type="range" id="aiCalorieSlider" min="50" max="500" step="25" value="500" style="width:100%; cursor:pointer;" />
+          </div>
+
+          <div>
+            <label for="aiCategoryFilter" style="font-weight:700; font-size:0.88rem; color:#242220; display:block; margin-bottom:8px;">
+              <i class="fa-solid fa-utensils" style="color:#7a1f1f;"></i> Target Category:
+            </label>
+            <select id="aiCategoryFilter" style="width:100%; padding: 10px 14px; border-radius:6px; border: 1px solid #e2dac9; font-weight:600; font-family:var(--font-body);">
+              <option value="All">All Categories (21 Dishes)</option>
+              <option value="Beverages">Beverages (5)</option>
+              <option value="Starters">Starters & Chaat (4)</option>
+              <option value="Main Course">Main Course (6)</option>
+              <option value="Breads & Rice">Breads & Rice (2)</option>
+              <option value="Desserts">Desserts (4)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Quick AI Presets -->
+        <div style="margin-bottom: 16px;">
+          <span style="font-size:0.8rem; font-weight:700; color:#666; text-transform:uppercase; display:block; margin-bottom:6px;">
+            <i class="fa-solid fa-bolt" style="color:#f59e0b;"></i> Quick AI Presets:
+          </span>
+          <div style="display:flex; flex-wrap:wrap; gap:8px;">
+            <button type="button" class="btn-preset" onclick="setAIPreset('vegan_250')">🌱 Vegan &lt; 250 kcal</button>
+            <button type="button" class="btn-preset" onclick="setAIPreset('high_protein')">💪 High Protein (&gt;10g)</button>
+            <button type="button" class="btn-preset" onclick="setAIPreset('paneer')">🧀 Paneer Specials</button>
+            <button type="button" class="btn-preset" onclick="setAIPreset('chilled_drinks')">🍹 Chilled Beverages</button>
+            <button type="button" class="btn-preset" onclick="setAIPreset('desserts')">🍨 Royal Desserts</button>
+          </div>
+        </div>
+
+        <div class="ai-input-row">
+          <div class="input-group">
+            <label for="aiCustomPrompt"><i class="fa-solid fa-comment-dots"></i> Custom Dietary Search / Keyword:</label>
+            <input type="text" id="aiCustomPrompt" placeholder="e.g. paneer, chai, dessert, low calorie, rice..." />
+          </div>
+          <button class="btn btn-secondary" onclick="resetAIFilters()" style="padding:13px 18px; border-radius:8px; border:1px solid #cbd5e1; color:#475569; background:#fff; font-weight:700;">
+            <i class="fa-solid fa-rotate-left"></i> Reset
+          </button>
+        </div>
+      </div>
+
+      <!-- AI Results Container -->
+      <div id="aiResultsSection" class="ai-results-wrapper hidden">
+        <div class="ai-verdict-bar" id="aiVerdictBar">
+          <!-- Populated by JS -->
+        </div>
+        <div class="ai-recommendations-grid" id="aiCardsGrid">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       VIEW 3: REAL-TIME KITCHEN DISPLAY SYSTEM (KDS KANBAN)
+       ========================================================================= -->
+  <div id="kitchen-kds-view" class="app-view">
+    <div class="kds-container">
+      <div class="kds-header">
+        <div>
+          <h2><i class="fa-solid fa-fire-burner"></i> Live Kitchen Display System (KDS)</h2>
+          <p>Real-time order state machine synchronizing Kitchen, Drivers, and Customers via Amazon DynamoDB.</p>
+        </div>
+        <div class="kds-actions">
+          <button class="btn-refresh-kds" onclick="createSampleKdsOrder()" style="background:#7a1f1f; color:#fff; border:none;">
+            <i class="fa-solid fa-plus"></i> Create Sample Ticket
+          </button>
+          <button class="btn-refresh-kds" onclick="loadKdsOrders()">
+            <i class="fa-solid fa-rotate"></i> Refresh
+          </button>
+          <span class="live-indicator"><span class="pulse-dot"></span> Live Sync</span>
+        </div>
+      </div>
+
+      <div class="kds-kanban-board">
+        
+        <!-- Column 1: Received / Placed -->
+        <div class="kds-column" id="col-placed">
+          <div class="col-header placed">
+            <span class="col-title"><i class="fa-solid fa-inbox"></i> New Orders</span>
+            <span class="col-badge" id="count-placed">0</span>
+          </div>
+          <div class="kds-cards-list" id="list-placed">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+
+        <!-- Column 2: Cooking -->
+        <div class="kds-column" id="col-preparing">
+          <div class="col-header preparing">
+            <span class="col-title"><i class="fa-solid fa-kitchen-set"></i> Cooking In Kitchen</span>
+            <span class="col-badge" id="count-preparing">0</span>
+          </div>
+          <div class="kds-cards-list" id="list-preparing">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+
+        <!-- Column 3: Out for Delivery -->
+        <div class="kds-column" id="col-delivery">
+          <div class="col-header delivery">
+            <span class="col-title"><i class="fa-solid fa-motorcycle"></i> Out for Delivery</span>
+            <span class="col-badge" id="count-delivery">0</span>
+          </div>
+          <div class="kds-cards-list" id="list-delivery">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+
+        <!-- Column 4: Delivered -->
+        <div class="kds-column" id="col-completed">
+          <div class="col-header completed">
+            <span class="col-title"><i class="fa-solid fa-circle-check"></i> Completed</span>
+            <span class="col-badge" id="count-completed">0</span>
+          </div>
+          <div class="kds-cards-list" id="list-completed">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       VIEW 4: CLOUDOPS OBSERVABILITY & LOAD SIMULATOR
+       ========================================================================= -->
+  <div id="cloudops-view" class="app-view">
+    <div class="cloudops-container">
+      
+      <div class="ops-header">
+        <div>
+          <h2><i class="fa-solid fa-gauge-high"></i> AWS Cloud Observability & Telemetry</h2>
+          <p>Real-time distributed system telemetry, EC2 compute metrics, and DynamoDB database health.</p>
+        </div>
+        <div class="ops-cloud-pill">
+          <i class="fa-brands fa-aws"></i> AWS Region: <strong>ap-south-1 (Mumbai)</strong>
+        </div>
+      </div>
+
+      <!-- Cloud KPI Cards -->
+      <div class="ops-kpi-grid">
+        <div class="ops-kpi-card">
+          <div class="kpi-icon blue"><i class="fa-solid fa-bolt"></i></div>
+          <div class="kpi-info">
+            <span class="kpi-label">API Latency (p95)</span>
+            <span class="kpi-value" id="metricLatency">-- ms</span>
+            <span class="kpi-sub">Sub-50ms SLA Target</span>
+          </div>
+        </div>
+
+        <div class="ops-kpi-card">
+          <div class="kpi-icon green"><i class="fa-solid fa-microchip"></i></div>
+          <div class="kpi-info">
+            <span class="kpi-label">EC2 Heap Memory</span>
+            <span class="kpi-value" id="metricMemory">-- MB</span>
+            <span class="kpi-sub">Node.js V8 Heap Utilization</span>
+          </div>
+        </div>
+
+        <div class="ops-kpi-card">
+          <div class="kpi-icon orange"><i class="fa-solid fa-database"></i></div>
+          <div class="kpi-info">
+            <span class="kpi-label">DynamoDB Operations</span>
+            <span class="kpi-value" id="metricDbOps">-- RCU/WCU</span>
+            <span class="kpi-sub">Pay-Per-Request On-Demand</span>
+          </div>
+        </div>
+
+        <div class="ops-kpi-card">
+          <div class="kpi-icon purple"><i class="fa-solid fa-globe"></i></div>
+          <div class="kpi-info">
+            <span class="kpi-label">Total Cloud Requests</span>
+            <span class="kpi-value" id="metricRequests">--</span>
+            <span class="kpi-sub">100% 2xx Success Rate</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Load Simulator & Telemetry Inspector -->
+      <div class="ops-split-grid">
+        
+        <!-- Load Testing Card -->
+        <div class="ops-panel glass-panel">
+          <div class="panel-header">
+            <h3><i class="fa-solid fa-fire"></i> Cloud Stress & Concurrency Simulator</h3>
+            <span class="badge-free">Zero-Cost Architecture</span>
+          </div>
+          <p>Simulate concurrent HTTP traffic bursts against the AWS EC2 cluster to benchmark real-time API latency, system elasticity, and DynamoDB throughput.</p>
+          
+          <div class="load-preset-buttons">
+            <button class="btn-preset active" data-users="15" data-reqs="30" onclick="selectLoadPreset(this, 15, 30)">
+              <strong>Light Burst</strong> (15 Users / 30 Reqs)
+            </button>
+            <button class="btn-preset" data-users="30" data-reqs="60" onclick="selectLoadPreset(this, 30, 60)">
+              <strong>Medium Load</strong> (30 Users / 60 Reqs)
+            </button>
+            <button class="btn-preset" data-users="50" data-reqs="100" onclick="selectLoadPreset(this, 50, 100)">
+              <strong>Heavy Spike</strong> (50 Users / 100 Reqs)
+            </button>
+          </div>
+
+          <button class="btn btn-primary btn-run-test" id="btnRunLoadTest" onclick="runCloudLoadTest()">
+            <i class="fa-solid fa-play"></i> <span>Execute Concurrent Cloud Load Test</span>
+            <div class="spinner hidden"></div>
+          </button>
+
+          <div id="loadTestResultBox" class="load-result-box hidden">
+            <!-- Results populated by JS -->
+          </div>
+        </div>
+
+        <!-- Telemetry Details Panel -->
+        <div class="ops-panel glass-panel">
+          <div class="panel-header">
+            <h3><i class="fa-solid fa-server"></i> Cloud Infrastructure Metadata</h3>
+          </div>
+          
+          <div class="meta-table">
+            <div class="meta-row">
+              <span class="meta-key">Cloud Compute:</span>
+              <span class="meta-val">Amazon Web Services EC2 (t2.micro / Linux)</span>
+            </div>
+            <div class="meta-row">
+              <span class="meta-key">Edge CDN / Proxy:</span>
+              <span class="meta-val">Vercel Global Edge Network + S3 Backup</span>
+            </div>
+            <div class="meta-row">
+              <span class="meta-key">Persistence Layer:</span>
+              <span class="meta-val">Amazon DynamoDB (Pay-per-request On-Demand)</span>
+            </div>
+            <div class="meta-row">
+              <span class="meta-key">IAM Authentication:</span>
+              <span class="meta-val">EC2 Instance Profile (Zero hardcoded secrets)</span>
+            </div>
+            <div class="meta-row">
+              <span class="meta-key">Process Manager:</span>
+              <span class="meta-val">PM2 Cluster (Auto-recovery on reboot)</span>
+            </div>
+            <div class="meta-row">
+              <span class="meta-key">Server Uptime:</span>
+              <span class="meta-val" id="metricUptime">--</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       MODAL: LIVE ORDER TRACKING
+       ========================================================================= -->
+  <div id="trackModal" class="modal-overlay hidden">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="modal-title"><i class="fa-solid fa-location-dot"></i> Live Order Tracker</div>
+        <button class="modal-close-btn" onclick="closeTrackModal()"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      
+      <div class="track-search-bar">
+        <input type="text" id="trackInputOrderId" placeholder="Enter Order ID (e.g. ORD-123456)" />
+        <button class="btn-track-submit" onclick="trackOrderById()">Track</button>
+      </div>
+
+      <div id="trackModalContent" class="track-modal-body">
+        <div class="track-placeholder">
+          <i class="fa-solid fa-receipt"></i>
+          <p>Place an order or enter your Order ID above to see live progress.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
