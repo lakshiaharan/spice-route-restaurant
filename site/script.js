@@ -3,7 +3,21 @@
 // Master 21-Dish Curated Knowledge Base with 1-to-1 Images
 // =========================================================
 
-const API_BASE_URL = "http://65.0.105.182:3000";
+// Dynamic API Base URL resolution (prevents Mixed Content blocking on HTTPS deployments)
+const API_BASE_URL = (() => {
+  if (typeof window !== "undefined") {
+    if (window.ENV_API_URL) return window.ENV_API_URL;
+    // When served over HTTPS (e.g. Vercel Edge / CloudFront), route through /api proxy rewrite
+    if (window.location.protocol === "https:") {
+      return `${window.location.origin}/api`;
+    }
+    // Local development fallback
+    if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
+      return "http://localhost:3000";
+    }
+  }
+  return "/api";
+})();
 
 // --- 21 Curated Signature Dishes with 100% Dedicated Images ---
 const MENU_KNOWLEDGE_BASE = [
