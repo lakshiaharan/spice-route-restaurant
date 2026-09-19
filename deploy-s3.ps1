@@ -5,7 +5,7 @@
 
 $ErrorActionPreference = "Stop"
 
-$BUCKET_NAME = "spice-route-restaurant-site"  # Note: S3 bucket names must be globally unique
+$BUCKET_NAME = "spice-route-restaurant-lakshi-2026"  # Note: S3 bucket names must be globally unique
 $REGION = "ap-south-1"
 
 Write-Host ">>> Creating S3 bucket: $BUCKET_NAME"

@@ -2,6 +2,8 @@ import { Router, Request, Response } from "express";
 import { v4 as uuidv4 } from "uuid";
 import { PutCommand, ScanCommand } from "@aws-sdk/lib-dynamodb";
 import { ddb, TABLES } from "../db";
+import { publishBookingConfirmation } from "../sns";
+import { recordBusinessEvent } from "../cloudwatch";
 
 const router = Router();
 
@@ -42,6 +44,10 @@ router.post("/", async (req: Request, res: Response) => {
         Item: booking
       })
     );
+
+    // Trigger asynchronous AWS SNS Notification and CloudWatch Metric
+    publishBookingConfirmation(booking).catch(() => {});
+    recordBusinessEvent("NewBooking").catch(() => {});
 
     return res.status(201).json({ message: "Booking confirmed", booking });
   } catch (err) {

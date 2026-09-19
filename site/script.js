@@ -1045,7 +1045,7 @@ function runAIDietaryAdvisor() {
     if (dish.isVegan) reasons.push("100% Plant-Based Vegan");
     if (dish.isGlutenFree) reasons.push("Gluten-Free Certified");
     if (dish.isNutFree) reasons.push("Nut-Free Allergen Safe");
-    if (dish.proteinGrams >= 12) reasons.push(`High Protein (${dish.proteinGrams}g)`);
+    if (dish.proteinGrams >= 10) reasons.push(`High Protein (${dish.proteinGrams}g)`);
     if (dish.isDiabeticFriendly) reasons.push("Low Glycemic / Diabetic Safe");
     if (dish.isJainFriendly) reasons.push("Jain Friendly (No Root Veggies)");
     if (dish.calories <= 200) reasons.push(`Low Calorie (${dish.calories} kcal)`);

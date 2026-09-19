@@ -17,3 +17,12 @@ npm-debug.log*
 # OS files
 .DS_Store
 Thumbs.db
+
+# Presentations & Scratch scripts
+*.pptx
+*.docx
+*.pdf
+*report*
+*Report*
+generate_presentation.py
+presentation.html

@@ -2,6 +2,8 @@ import { Router, Request, Response } from "express";
 import { v4 as uuidv4 } from "uuid";
 import { PutCommand, ScanCommand, GetCommand, UpdateCommand } from "@aws-sdk/lib-dynamodb";
 import { ddb, TABLES } from "../db";
+import { publishOrderAlert, publishDeliveryDispatch } from "../sns";
+import { recordBusinessEvent } from "../cloudwatch";
 
 const router = Router();
 
@@ -63,6 +65,10 @@ router.post("/", async (req: Request, res: Response) => {
         Item: order
       })
     );
+
+    // Asynchronous AWS SNS Alert & CloudWatch Metric
+    publishOrderAlert(order).catch(() => {});
+    recordBusinessEvent("NewOrder").catch(() => {});
 
     return res.status(201).json({ message: "Order placed successfully", order });
   } catch (err) {
@@ -159,6 +165,12 @@ router.patch("/:id/status", async (req: Request, res: Response) => {
         }
       })
     );
+
+    // Asynchronous CloudWatch Event & SNS Delivery Dispatch Alert
+    recordBusinessEvent("KdsTransition").catch(() => {});
+    if (status === "OUT_FOR_DELIVERY") {
+      publishDeliveryDispatch(id, current.Item.name, current.Item.phone).catch(() => {});
+    }
 
     return res.json({
       message: "Order status updated",

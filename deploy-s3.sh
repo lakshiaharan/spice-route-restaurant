@@ -8,7 +8,7 @@
 
 set -e
 
-BUCKET_NAME="spice-route-restaurant-site"   # must be globally unique - change if taken
+BUCKET_NAME="spice-route-restaurant-lakshi-2026"   # must be globally unique - change if taken
 REGION="ap-south-1"
 
 echo ">>> Creating S3 bucket: $BUCKET_NAME"

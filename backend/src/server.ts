@@ -18,7 +18,10 @@ app.get("/", (_req, res) => {
     cloudProvider: "AWS",
     compute: "EC2 (t2.micro)",
     database: "Amazon DynamoDB",
-    version: "2.0.0-enterprise",
+    messaging: "Amazon SNS (Pub/Sub)",
+    monitoring: "Amazon CloudWatch",
+    cdn: "Amazon CloudFront",
+    version: "2.5.0-enterprise",
     timestamp: new Date().toISOString()
   });
 });
@@ -32,11 +35,16 @@ app.get("/health", (_req, res) => {
       provider: "AWS",
       region: process.env.AWS_REGION || "ap-south-1",
       compute: "Amazon EC2",
-      database: "Amazon DynamoDB"
+      database: "Amazon DynamoDB",
+      notifications: "Amazon SNS",
+      observability: "Amazon CloudWatch",
+      edgeCDN: "Amazon CloudFront"
     },
     services: {
       api: "ONLINE",
       dynamodb: "CONNECTED",
+      snsNotifications: "ACTIVE (Pub/Sub Event Bus)",
+      cloudwatchMetrics: "STREAMING (Namespace: SpiceRoute/CloudOps)",
       aiSommelier: "READY",
       kdsStateEngine: "ACTIVE"
     },
