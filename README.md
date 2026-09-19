@@ -1,20 +1,21 @@
 <div align="center">
 
 # 🌿 Spice Route
-### Cloud-Native Restaurant, AI Sommelier & Smart Kitchen Platform
+### Cloud-Native Restaurant Platform & Dietary Rule Engine
 
-[![AWS Cloud](https://img.shields.io/badge/AWS-S3%20%7C%20EC2%20%7C%20DynamoDB%20%7C%20SNS%20%7C%20CloudWatch%20%7C%20IAM-FF9900?style=for-the-badge&logo=amazon-aws&logoColor=white)](https://aws.amazon.com/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.7-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-[![Node.js](https://img.shields.io/badge/Node.js-20_LTS-339933?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org/)
-[![Express.js](https://img.shields.io/badge/Express.js-4.21-000000?style=for-the-badge&logo=express&logoColor=white)](https://expressjs.com/)
-[![Vercel Edge](https://img.shields.io/badge/Vercel-Edge_Network-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://vercel.com/)
-[![DynamoDB](https://img.shields.io/badge/Amazon-DynamoDB_NoSQL-4053D6?style=for-the-badge&logo=amazondynamodb&logoColor=white)](https://aws.amazon.com/dynamodb/)
+[![CI Suite](https://github.com/lakshiaharan/spice-route-restaurant/actions/workflows/ci.yml/badge.svg)](https://github.com/lakshiaharan/spice-route-restaurant/actions)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![AWS Cloud](https://img.shields.io/badge/AWS-S3%20%7C%20EC2%20%7C%20DynamoDB%20%7C%20SNS%20%7C%20CloudWatch-FF9900?logo=amazon-aws&logoColor=white)](https://aws.amazon.com/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.7-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Node.js](https://img.shields.io/badge/Node.js-20_LTS-339933?logo=node.js&logoColor=white)](https://nodejs.org/)
+[![Express.js](https://img.shields.io/badge/Express.js-4.21-000000?logo=express&logoColor=white)](https://expressjs.com/)
+[![DynamoDB](https://img.shields.io/badge/Amazon-DynamoDB_NoSQL-4053D6?logo=amazondynamodb&logoColor=white)](https://aws.amazon.com/dynamodb/)
 
 <p align="center">
-  <b>A production-grade, multi-tier cloud platform engineered for high availability, sub-50ms API responsiveness, real-time kitchen operations, and intelligent nutritional matching on Amazon Web Services (AWS).</b>
+  A decoupled multi-tier cloud prototype engineered on Amazon Web Services (AWS) featuring a TypeScript Express API on EC2, DynamoDB NoSQL persistence, asynchronous Amazon SNS notifications, CloudWatch telemetry, S3 static hosting, and a deterministic dietary rule engine.
 </p>
 
-[🌐 Live Vercel Edge](https://spice-route-restaurant-flame.vercel.app/) • [🪣 Live AWS S3 Site](http://spice-route-restaurant-lakshi-2026.s3-website.ap-south-1.amazonaws.com/) • [🚀 Live AWS EC2 API](http://65.0.105.182:3000/health) • [📖 Architecture](#-system-architecture) • [⚡ Quickstart](#-getting-started)
+[🌐 Live Web Demo](https://spice-route-restaurant-flame.vercel.app/) • [🪣 AWS S3 Endpoint](http://spice-route-restaurant-lakshi-2026.s3-website.ap-south-1.amazonaws.com/) • [📖 System Architecture](#-system-architecture) • [⚡ Quickstart](#-getting-started) • [🎓 Architecture Notes](docs/viva-guide.md)
 
 </div>
 
@@ -24,32 +25,31 @@
 - [Overview](#-overview)
 - [System Architecture](#-system-architecture)
 - [AWS Cloud Infrastructure](#-aws-cloud-infrastructure)
-- [Live Cloud Deployments](#-live-cloud-deployments)
-- [Core Platform Features](#-core-platform-features)
-  - [1. AI Dietary & Nutrition Sommelier](#1-ai-dietary--nutrition-sommelier)
-  - [2. Real-Time Kitchen Display System (KDS Kanban)](#2-real-time-kitchen-display-system-kds-kanban)
-  - [3. Event-Driven Messaging (Amazon SNS)](#3-event-driven-messaging-amazon-sns)
-  - [4. CloudOps Observability & Load Tester](#4-cloudops-observability--load-tester)
+- [Core Platform Modules](#-core-platform-modules)
+  - [1. Dietary & Nutritional Rule Engine](#1-dietary--nutritional-rule-engine)
+  - [2. Kitchen Display System (KDS Kanban)](#2-kitchen-display-system-kds-kanban)
+  - [3. Asynchronous Messaging (Amazon SNS)](#3-asynchronous-messaging-amazon-sns)
+  - [4. Observability & Telemetry (Amazon CloudWatch)](#4-observability--telemetry-amazon-cloudwatch)
+- [Security & Network Configuration](#-security--network-configuration)
 - [REST API Specification](#-rest-api-specification)
-- [Automated Audit & Testing](#-automated-audit--testing)
-- [Project Directory Structure](#-project-directory-structure)
+- [Automated Testing & CI/CD](#-automated-testing--cicd)
+- [Repository Structure](#-repository-structure)
 - [Getting Started](#-getting-started)
-- [Technical FAQ & Viva Guide](#-technical-faq--viva-guide)
 - [License](#-license)
 
 ---
 
 ## 📖 Overview
 
-**Spice Route** modernizes high-volume culinary and cloud kitchen workflows by replacing single-server monolithic architectures with a **decoupled, multi-tier cloud design**.
+**Spice Route** demonstrates a decoupled multi-tier architecture designed to separate static presentation assets from transactional business compute and persistence.
 
-### Key Architectural Highlights:
-- **Physical Tier Decoupling**: Static presentation media is completely offloaded to **Amazon S3**, reserving 100% of **Amazon EC2** compute cycles for transactional business logic.
-- **Serverless NoSQL Persistence**: Powered by **Amazon DynamoDB** with On-Demand horizontal auto-scaling and single-table partition key lookups (`orderId`, `bookingId`).
-- **Asynchronous Event-Driven Messaging**: Integrated with **Amazon SNS** for non-blocking email/SMS dispatch upon table reservations and driver departures.
-- **Full-Stack SRE Telemetry**: Emits custom business metrics to **Amazon CloudWatch** (`SpiceRoute/CloudOps`) paired with proactive anomaly alarms.
-- **Zero Hardcoded Secrets**: Secure role-based authentication using **AWS IAM Instance Profiles**.
-- **Automated Verification**: End-to-end test suite validating all 21 signature dishes, rule engines, state machines, and live cloud endpoints.
+### Key Engineering Features:
+- **Tier Decoupling**: Static assets (HTML, CSS, JS, images) are served via **Amazon S3** and **Vercel Edge**, offloading web traffic from the compute layer.
+- **Stateless Compute**: **TypeScript / Express REST API** running on **Amazon EC2 (t2.micro / Ubuntu Linux)**, daemonized with **PM2** process management.
+- **Serverless NoSQL Storage**: **Amazon DynamoDB** with On-Demand capacity handling table reservations (`RestaurantBookings`) and food orders (`RestaurantOrders`).
+- **Event-Driven Messaging**: **Amazon SNS** background notification bus delivering structured JSON email/SMS alerts upon booking confirmations and order dispatch.
+- **Cloud Observability**: Custom metrics (`SpiceRoute/CloudOps`) streamed to **Amazon CloudWatch** with automated CPU threshold alarms.
+- **Role-Based Security**: Credentials managed through **AWS IAM Instance Profiles** with zero hardcoded API keys.
 
 ---
 
@@ -57,15 +57,15 @@
 
 ```mermaid
 flowchart TD
-    subgraph ClientLayer ["1. Client & Application Interfaces"]
+    subgraph ClientLayer ["1. Client & Application Layer"]
         CustomerApp["📱 Customer Web Ordering Interface"]
         KDSApp["🍳 Kitchen Display System (KDS Terminal)"]
         OpsDashboard["📊 CloudOps Telemetry & Load Tester"]
     end
 
     subgraph CDNLayer ["2. Web Distribution & Storage Tier"]
-        VercelEdge["🌐 Vercel Global Edge Network\n(HTTPS SSL & Anycast DNS)"]
-        S3Bucket["🪣 AWS S3 Static Website Hosting\n(Bucket: spice-route-restaurant-lakshi-2026)"]
+        VercelEdge["🌐 Vercel Edge Network\n(HTTPS SSL & Anycast Routing)"]
+        S3Bucket["🪣 Amazon S3 Static Hosting\n(Bucket: spice-route-restaurant-lakshi-2026)"]
     end
 
     subgraph ComputeLayer ["3. Application Compute Layer (AWS EC2)"]
@@ -94,7 +94,7 @@ flowchart TD
         IAMRole["🔐 AWS IAM Instance Profile\n(Zero Hardcoded Credentials)"]
     end
 
-    CustomerApp -->|HTTPS / Anycast| VercelEdge
+    CustomerApp -->|HTTPS / Edge| VercelEdge
     CustomerApp -->|HTTP Static Assets| S3Bucket
     CustomerApp -->|REST API Calls| ExpressAPI
     KDSApp -->|State Machine Sync| ExpressAPI
@@ -103,69 +103,64 @@ flowchart TD
     ExpressAPI --- IAMRole
     IAMRole -->|Authorized Read/Write| DDBOrders
     IAMRole -->|Authorized Read/Write| DDBBookings
-    ExpressAPI -->|Publish Booking & Order Events| SNSTopic
-    ExpressAPI -->|Emit Latency & Custom Metrics| CloudWatchEngine
+    ExpressAPI -->|Publish Events| SNSTopic
+    ExpressAPI -->|Emit Telemetry| CloudWatchEngine
 ```
 
 ---
 
 ## ☁️ AWS Cloud Infrastructure
 
-| AWS Cloud Service | Architecture Role | Configuration Details | Scalability & SLA |
+| AWS Cloud Service | Architecture Role | Configuration Details | Scalability Mode |
 | :--- | :--- | :--- | :--- |
-| **Amazon S3** | Static Website Tier | Bucket `spice-route-restaurant-lakshi-2026` in `ap-south-1` with public static hosting | Serverless (11 9s Durability) |
-| **Amazon EC2** | Stateless API Compute | `t2.micro` (1 vCPU, 1 GB RAM), Ubuntu Linux 24.04 LTS, Node.js 20 LTS, PM2 | Vertical / Auto-Scaling Ready |
-| **Amazon DynamoDB** | Managed NoSQL Tier | Tables: `RestaurantOrders` (`orderId`), `RestaurantBookings` (`bookingId`) | Single-digit ms Latency |
-| **Amazon SNS** | Event-Driven Messaging | Standard Topic: `SpiceRoute-Alerts` (Email-JSON & SMS dispatch) | Serverless Pub/Sub Bus |
-| **Amazon CloudWatch** | Observability & SRE | Namespace: `SpiceRoute/CloudOps`, High-CPU Alarm (`>= 80%`) | Real-time Metrics & Alarms |
-| **AWS IAM** | Identity & Access | EC2 Instance Profile with scoped DynamoDB & SNS read/write policies | Zero Hardcoded Secrets |
-| **AWS VPC & Sec Groups** | Network Security | Inbound: Port 80 (HTTP), 22 (SSH), 3000 (API); Outbound: All Traffic | Layer 4 Stateful Firewall |
+| **Amazon S3** | Static Website Hosting | Public static website hosting bucket in `ap-south-1` | Serverless Managed Storage |
+| **Amazon EC2** | Stateless API Compute | `t2.micro` (1 vCPU, 1 GB RAM), Ubuntu Linux, Node.js 20 LTS, PM2 | Single Instance Prototype |
+| **Amazon DynamoDB** | NoSQL Storage Tier | Tables: `RestaurantOrders` (`orderId`), `RestaurantBookings` (`bookingId`) | On-Demand Auto-Scaling |
+| **Amazon SNS** | Pub/Sub Messaging | Standard Topic: `SpiceRoute-Alerts` (Email-JSON & SMS subscriptions) | Managed Event Bus |
+| **Amazon CloudWatch** | Observability & Metrics | Namespace: `SpiceRoute/CloudOps`, CPU Alarm (`>= 80%`) | Metric Streams & Alarms |
+| **AWS IAM** | Identity & Security | Scoped EC2 Instance Profile policies for DynamoDB and SNS | Role-Based Access Control |
+| **AWS VPC & Sec Groups** | Network Isolation | SSH restricted to admin IP (`<YOUR_IP>/32`), API exposed via HTTPS | Layer 4 Stateful Firewall |
 
 ---
 
-## 🌐 Live Cloud Deployments
+## 🎯 Core Platform Modules
 
-| Component | Target URL | Provider / Region |
-| :--- | :--- | :--- |
-| **Production Frontend** | **[https://spice-route-restaurant-flame.vercel.app/](https://spice-route-restaurant-flame.vercel.app/)** | Vercel Global Edge (HTTPS) |
-| **AWS S3 Static Website** | **[http://spice-route-restaurant-lakshi-2026.s3-website.ap-south-1.amazonaws.com/](http://spice-route-restaurant-lakshi-2026.s3-website.ap-south-1.amazonaws.com/)** | Amazon S3 (ap-south-1 Mumbai) |
-| **AWS EC2 REST API** | **[http://65.0.105.182:3000/](http://65.0.105.182:3000/)** | Amazon EC2 (t2.micro / Ubuntu) |
-| **Live Health & SRE Probe** | **[http://65.0.105.182:3000/health](http://65.0.105.182:3000/health)** | Live Telemetry Endpoint |
+### 1. Dietary & Nutritional Rule Engine
+- **Deterministic Multi-Variable Evaluation**: Evaluates 21 curated signature vegetarian dishes for calories, protein, carbs, and fats.
+- **Standardized High-Protein (≥10g)**: Accurately filters and ranks the top 6 protein-rich items (Paneer Tikka 18g, Paneer Butter Masala 17g, Palak Paneer 16g, Dal Makhani 14g, Yellow Dal Tadka 12g, Shahi Malai Kofta 11g).
+- **Calorie Budget Boundary**: Dynamic boundary filter (50 kcal to 500 kcal).
+- **Allergen Verification**: Strict zero-leakage exclusion for `100% Vegan`, `Gluten-Free`, `Nut-Free`, `Diabetic-Friendly`, and `Jain-Friendly`.
 
----
-
-## 🎯 Core Platform Features
-
-### 1. AI Dietary & Nutrition Sommelier
-- **Macro-Nutrient Profiling**: Real-time evaluation of Calories, Protein, Carbohydrates, and Fats across 21 curated signature dishes.
-- **Standardized High-Protein (>10g)**: Accurately identifies and sorts the top 6 protein-rich vegetarian specialties:
-  1. *Paneer Tikka* (18g protein)
-  2. *Paneer Butter Masala* (17g protein)
-  3. *Palak Paneer* (16g protein)
-  4. *Dal Makhani* (14g protein)
-  5. *Yellow Dal Tadka* (12g protein)
-  6. *Shahi Malai Kofta* (11g protein)
-- **Calorie Budget Slider**: Dynamic boundary filtering from 50 kcal to 500 kcal.
-- **Zero-Leakage Allergen Engine**: Strict verification for `100% Vegan`, `Gluten-Free`, `Nut-Free`, `Diabetic-Friendly`, and `Jain-Friendly`.
-
-### 2. Real-Time Kitchen Display System (KDS Kanban)
+### 2. Kitchen Display System (KDS Kanban)
 - **4-Stage State Machine**: `📥 Order Placed` ➔ `👨‍🍳 In Preparation` ➔ `🚚 Out for Delivery` ➔ `✅ Delivered & Completed`.
-- **Driver Dispatch Integration**: Moving tickets to *Out for Delivery* automatically assigns driver details and dispatches a customer notification.
+- **Driver Dispatch Integration**: Moving tickets to *Out for Delivery* assigns driver details and triggers an automated dispatch alert via Amazon SNS.
 
-### 3. Event-Driven Messaging (Amazon SNS)
+### 3. Asynchronous Messaging (Amazon SNS)
 - Decouples notification dispatch from HTTP request-response cycles.
 - Publishes structured JSON payloads to topic `SpiceRoute-Alerts` for table reservations and delivery dispatches.
 
-### 4. CloudOps Observability & Load Tester
-- In-browser load generator simulating concurrent virtual users against the live backend.
-- Calculates **Average Latency (ms)**, **p50/p95/p99 latency percentiles**, **Throughput (Req/Sec)**, and **Memory RSS (MB)** streamed to CloudWatch.
+### 4. Observability & Telemetry (Amazon CloudWatch)
+- Custom metric dispatcher tracking `ApiLatency`, `NewBooking`, `NewOrder`, and `KdsTransition`.
+- Benchmarked under simulated concurrent client loads (25–50 virtual users).
+
+---
+
+## 🔒 Security & Network Configuration
+
+- **IAM Instance Profiles**: The backend on EC2 assumes an IAM role at runtime, retrieving short-lived credentials via IMDSv2. No secrets are stored in code or repository files.
+- **Security Group Rules**:
+  - **SSH (Port 22)**: Restricted to administrator IP (`<YOUR_ADMIN_IP>/32`).
+  - **HTTPS (Port 443)**: Public inbound for secure web and API proxy traffic.
+  - **HTTP (Port 80)**: Redirects to HTTPS.
+  - **Internal API (Port 3000)**: Bound to `127.0.0.1` behind reverse proxy / HTTPS termination.
+- **Mixed Content Mitigation**: Frontend dynamically resolves API URLs, routing through HTTPS reverse-proxy rewrites (`/api/*`) to prevent browser mixed-content blocking.
 
 ---
 
 ## 📡 REST API Specification
 
 ### `GET /health`
-Returns live system health, process uptime, memory utilization, and AWS cloud environment data.
+Returns live system health, process uptime, memory utilization, and cloud environment metadata.
 ```json
 {
   "status": "UP",
@@ -183,9 +178,7 @@ Returns live system health, process uptime, memory utilization, and AWS cloud en
     "api": "ONLINE",
     "dynamodb": "CONNECTED",
     "snsNotifications": "ACTIVE (Pub/Sub Event Bus)",
-    "cloudwatchMetrics": "STREAMING (Namespace: SpiceRoute/CloudOps)",
-    "aiSommelier": "READY",
-    "kdsStateEngine": "ACTIVE"
+    "cloudwatchMetrics": "STREAMING (Namespace: SpiceRoute/CloudOps)"
   }
 }
 ```
@@ -193,7 +186,7 @@ Returns live system health, process uptime, memory utilization, and AWS cloud en
 ### `POST /orders`
 Creates a customer order, persists to DynamoDB, and dispatches an Amazon SNS notification.
 ```bash
-curl -X POST http://65.0.105.182:3000/orders \
+curl -X POST http://localhost:3000/orders \
   -H "Content-Type: application/json" \
   -d '{
     "name": "Priya Sharma",
@@ -206,7 +199,7 @@ curl -X POST http://65.0.105.182:3000/orders \
 ### `POST /bookings`
 Persists a table reservation in DynamoDB and triggers an instant confirmation alert.
 ```bash
-curl -X POST http://65.0.105.182:3000/bookings \
+curl -X POST http://localhost:3000/bookings \
   -H "Content-Type: application/json" \
   -d '{
     "name": "Ramesh Gupta",
@@ -220,86 +213,63 @@ curl -X POST http://65.0.105.182:3000/bookings \
 
 ---
 
-## 🧪 Automated Audit & Testing
+## 🧪 Automated Testing & CI/CD
 
-The platform includes a 4-tier automated test suite ([`backend/test-e2e.js`](backend/test-e2e.js)):
+The repository includes a decoupled testing architecture executed via **GitHub Actions**:
 
-```text
-=================================================
-  🌿 SPICE ROUTE PLATFORM: FULL E2E AUDIT
-=================================================
+- **Unit Test Suite (`backend/test/unit.test.js`)**: Validates the 21-dish catalog schema, deterministic dietary rule logic, and KDS state machine transitions with **zero external network dependencies**.
+- **Live Integration Probe (`backend/test/live.test.js`)**: Optional smoke test for live cloud endpoints.
 
-📁 [1/4] Auditing 21 Curated Dishes & Asset Integrity...
-  ✅ PASS: Total dishes must be exactly 21 (found: 21)
-  ✅ PASS: Beverages count is 5 (found: 5)
-  ✅ PASS: Starters count is 4 (found: 4)
-  ✅ PASS: Main Course count is 6 (found: 6)
-  ✅ PASS: Breads & Rice count is 2 (found: 2)
-  ✅ PASS: Desserts count is 4 (found: 4)
-  ✅ PASS: All dish IDs are unique
-  ✅ PASS: All dishes have 1-to-1 matching images
+```bash
+# Run Unit Tests (CI-safe)
+cd backend
+npm test
 
-🧠 [2/4] Auditing AI Dietary Sommelier Rule Engine...
-  ✅ PASS: Vegan filter strictly excludes all dairy (Lassi, Chai, Paneer, Naan, Desserts)
-  ✅ PASS: Expected 7 vegan dishes (found: 7)
-  ✅ PASS: High protein (>=10g) surfaces all 6 rich dishes (found: 6)
-  ✅ PASS: Top protein dish is Paneer Tikka (18g)
-  ✅ PASS: High protein results are correctly sorted in descending order
-  ✅ PASS: Chilled beverages strictly excludes hot Masala Chai
-  ✅ PASS: Calorie budget strictly excludes dishes above limit
-
-🍳 [3/4] Auditing KDS Kanban State Machine Transitions...
-  ✅ PASS: Order created in ORDER_PLACED state
-  ✅ PASS: Transition to PREPARING succeeds
-  ✅ PASS: Transition to OUT_FOR_DELIVERY assigns driver
-  ✅ PASS: Transition to DELIVERED completes lifecycle
-
-🌐 [4/4] Auditing Live Cloud Endpoints...
-  ✅ PASS: Vercel Frontend Live (HTTP 200)
-  ✅ PASS: AWS S3 Website Live (HTTP 200)
-  ✅ PASS: AWS EC2 Health Endpoint Live (HTTP 200)
-  ✅ PASS: EC2 Health status is 'UP'
-  ✅ PASS: EC2 Cloud Environment verified
-  ✅ PASS: DynamoDB connectivity verified
-
-=================================================
-  🏁 AUDIT COMPLETE: 29 / 29 TESTS PASSED (100.0%)
-=================================================
+# Run Live Endpoint Smoke Test (optional)
+npm run test:live
 ```
 
 ---
 
-## 📂 Project Directory Structure
+## 📂 Repository Structure
 
 ```text
 AWS/
-├── site/                               # Static Frontend (Hosted on AWS S3 & Vercel)
-│   ├── index.html                      # Landing page, AI Sommelier & KDS
+├── .github/
+│   └── workflows/
+│       └── ci.yml                      # GitHub Actions CI workflow (build & unit tests)
+├── docs/
+│   └── viva-guide.md                   # Technical design & architecture notes
+├── site/                               # Static Frontend (S3 / Vercel)
+│   ├── index.html                      # Single-page interface & KDS terminal
 │   ├── style.css                       # Responsive design system
-│   ├── script.js                       # Client-side AI Sommelier & KDS state machine
-│   └── images/                         # 21 Curated 1-to-1 food asset photography
-├── backend/                            # TypeScript REST API (Hosted on AWS EC2)
+│   ├── script.js                       # Client-side dietary rule engine & KDS state
+│   └── images/                         # 21 Curated signature dish image assets
+├── backend/                            # TypeScript Express REST API
 │   ├── src/
 │   │   ├── server.ts                   # Express server entrypoint & health probe
 │   │   ├── db.ts                       # Amazon DynamoDB Document Client setup
-│   │   ├── sns.ts                      # Amazon SNS alert & notification engine
-│   │   ├── cloudwatch.ts               # Amazon CloudWatch custom metrics dispatcher
+│   │   ├── sns.ts                      # Amazon SNS event dispatcher
+│   │   ├── cloudwatch.ts               # Amazon CloudWatch metrics dispatcher
 │   │   └── routes/
 │   │       ├── bookings.ts             # POST/GET table reservations
 │   │       ├── orders.ts               # POST/GET/PATCH food orders & KDS state
-│   │       ├── ai.ts                   # Menu database & dietary knowledge base
-│   │       └── analytics.ts            # CloudOps telemetry & concurrency load tester
-│   ├── test-e2e.js                     # 29-point automated end-to-end audit suite
-│   ├── package.json                    # Backend dependencies & build scripts
+│   │       ├── ai.ts                   # Curated menu database & nutritional rules
+│   │       └── analytics.ts            # CloudOps telemetry & load tester
+│   ├── test/
+│   │   ├── unit.test.js                # CI-safe unit test suite
+│   │   └── live.test.js                # Live cloud endpoints smoke tester
+│   ├── package.json                    # Backend dependencies & scripts
 │   └── tsconfig.json                   # TypeScript configuration
-├── deploy-s3.ps1                       # AWS CLI: Windows PowerShell S3 deployment
-├── deploy-s3.sh                        # AWS CLI: Linux/macOS S3 deployment
-├── deploy-cloudfront.ps1               # AWS CLI: CloudFront CDN provisioner (PowerShell)
-├── deploy-cloudfront.sh                # AWS CLI: CloudFront CDN provisioner (Bash)
-├── create-tables.ps1                   # AWS CLI: DynamoDB table creator (PowerShell)
-├── create-tables.sh                    # AWS CLI: DynamoDB table creator (Bash)
-├── sdk-upload.js                       # AWS SDK v3 Node.js upload tool
-├── package.json                        # Root deployment dependencies
+├── deploy-s3.ps1                       # S3 deployment script (PowerShell)
+├── deploy-s3.sh                        # S3 deployment script (Bash)
+├── deploy-cloudfront.ps1               # CloudFront CDN provisioner (PowerShell)
+├── deploy-cloudfront.sh                # CloudFront CDN provisioner (Bash)
+├── create-tables.ps1                   # DynamoDB table creator (PowerShell)
+├── create-tables.sh                    # DynamoDB table creator (Bash)
+├── sdk-upload.js                       # AWS SDK v3 Node.js upload utility
+├── vercel.json                         # Vercel deployment & HTTPS reverse proxy config
+├── LICENSE                             # MIT License
 └── README.md                           # Master project documentation
 ```
 
@@ -310,7 +280,7 @@ AWS/
 ### Prerequisites
 - **Node.js 20+ LTS**
 - **TypeScript 5.7+**
-- **AWS CLI** (configured via `aws configure` for deployment scripts)
+- **AWS CLI** (optional, for deployment scripts)
 
 ### 1. Clone the Repository
 ```bash
@@ -318,7 +288,7 @@ git clone https://github.com/lakshiaharan/spice-route-restaurant.git
 cd spice-route-restaurant
 ```
 
-### 2. Run the Backend API
+### 2. Run the Backend
 ```bash
 cd backend
 npm install
@@ -333,27 +303,11 @@ cd ../site
 npx serve .
 ```
 
-### 4. Run Automated E2E Audit
+### 4. Run Automated Tests
 ```bash
 cd ../backend
-node test-e2e.js
+npm test
 ```
-
----
-
-## 💡 Technical FAQ & Viva Guide
-
-### Q1: Why decouple the S3 static website from the EC2 compute instance?
-> Offloading 100% of static asset traffic (HTML, CSS, JS, images) to **Amazon S3** ensures static traffic spikes never consume EC2 CPU cycles, reserving server memory exclusively for order processing.
-
-### Q2: Why Amazon DynamoDB over Relational Databases (MySQL/PostgreSQL)?
-> DynamoDB delivers single-digit millisecond latency with On-Demand horizontal scaling. High-volume restaurant ordering relies on key-value operations (`orderId`, `bookingId`), eliminating relational connection pool bottlenecks.
-
-### Q3: How is credential security enforced in the cloud?
-> The application uses **AWS IAM Instance Profiles**. The AWS SDK on EC2 automatically retrieves temporary rotating credentials from the Instance Metadata Service (IMDSv2), ensuring zero API keys or secrets are stored in the code.
-
-### Q4: What is the role of Amazon SNS?
-> **Amazon SNS** acts as an asynchronous Pub/Sub messaging bus. Notifications for table bookings and delivery driver dispatches are handled in the background, preventing email/SMS delivery delays from blocking customer HTTP responses.
 
 ---
 
